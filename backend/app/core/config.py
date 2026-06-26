@@ -4,7 +4,7 @@ from typing import List
 import os
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "AI Website Builder API"
+    PROJECT_NAME: str = "Website Builder API"
     API_V1_STR: str = "/api"
     
     # Supabase Configuration

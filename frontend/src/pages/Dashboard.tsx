@@ -134,7 +134,7 @@ export const Dashboard: React.FC = () => {
             <div style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-muted)' }}>
               <Globe className="w-12 h-12" style={{ display: 'inline-block', marginBottom: '1rem', color: 'var(--text-muted)' }} />
               <p style={{ fontWeight: 600, marginBottom: '0.5rem' }}>No websites built yet</p>
-              <p style={{ fontSize: '0.85rem', marginBottom: '1.5rem' }}>Let our AI Agents construct your landing page layout in seconds.</p>
+              <p style={{ fontSize: '0.85rem', marginBottom: '1.5rem' }}>Let our agents construct your landing page layout in seconds.</p>
               <button onClick={() => navigate('/dashboard/create')} className="btn btn-primary" style={{ padding: '0.6rem 1.5rem' }}>
                 Create First Site <Sparkles className="w-4 h-4" />
               </button>

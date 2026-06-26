@@ -90,10 +90,10 @@ export const SEOManager: React.FC = () => {
       setTitle(res.data.title)
       setDescription(res.data.description)
       setKeywords(res.data.keywords)
-      setStatusMsg({ type: 'success', text: "SEO parameters auto-optimized by AI Copywriting Agent." })
+      setStatusMsg({ type: 'success', text: "SEO parameters auto-optimized by copywriter agent." })
     } catch (err) {
       console.error(err)
-      setStatusMsg({ type: 'error', text: "Failed to connect to AI Agents pipeline." })
+      setStatusMsg({ type: 'error', text: "Failed to connect to builder pipeline." })
     } finally {
       setGenerating(false)
     }
@@ -140,7 +140,7 @@ export const SEOManager: React.FC = () => {
                 style={{ alignSelf: 'flex-end', borderStyle: 'dashed', borderColor: 'var(--primary)', gap: '0.5rem', fontSize: '0.85rem' }}
                 disabled={generating || loading}
               >
-                <Sparkles className="w-4 h-4 text-primary" style={{ color: 'var(--primary)' }} /> {generating ? "Optimizing..." : "AI Generate SEO"}
+                <Sparkles className="w-4 h-4 text-primary" style={{ color: 'var(--primary)' }} /> {generating ? "Optimizing..." : "Auto Generate SEO"}
               </button>
             </div>
 

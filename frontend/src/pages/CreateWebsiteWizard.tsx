@@ -282,7 +282,7 @@ export const CreateWebsiteWizard: React.FC = () => {
             {step === 2 && (
               <div>
                 <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.75rem' }}>Select Category</h2>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>This helps our AI select the correct template layouts, services, and menus.</p>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>This helps our builder select the correct template layouts, services, and menus.</p>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '1rem' }}>
                   {categories.map((cat) => {
                     const selected = businessCategory === cat

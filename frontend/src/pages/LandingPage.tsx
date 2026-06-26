@@ -52,7 +52,7 @@ export const LandingPage: React.FC = () => {
             letterSpacing: '-0.03em'
           }}
         >
-          Create Stunning Websites in Seconds using <span className="gradient-text">AI Agents</span>
+          Create Stunning Websites in Seconds using <span className="gradient-text">Collaborative Agents</span>
         </motion.h1>
 
         <motion.p
@@ -130,8 +130,8 @@ export const LandingPage: React.FC = () => {
       {/* Features Showcase */}
       <section style={{ marginBottom: '8rem' }}>
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '1rem' }}>Powerful AI Agent Swarm</h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>Three specialized AI Agents work in sync to construct your website.</p>
+          <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '1rem' }}>Powerful Agent Swarm</h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>Three specialized Agents work in sync to construct your website.</p>
         </div>
 
         <div className="grid-cols-3">

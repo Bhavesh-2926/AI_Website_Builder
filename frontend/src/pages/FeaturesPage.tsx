@@ -6,7 +6,7 @@ export const FeaturesPage: React.FC = () => {
   const features = [
     {
       icon: Zap,
-      title: "Real-time AI Generation",
+      title: "Real-time Generation",
       description: "Our requirement, content, and design agents structure your website blueprint, generate professional copy, and configure custom styling tokens in under 10 seconds."
     },
     {
@@ -16,7 +16,7 @@ export const FeaturesPage: React.FC = () => {
     },
     {
       icon: Image,
-      title: "AI DALL-E Image Creator",
+      title: "DALL-E Image Creator",
       description: "Generate matching branding imagery directly from text prompts. We process the images and upload them into your personal Supabase Storage asset bucket."
     },
     {
