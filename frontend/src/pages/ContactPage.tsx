@@ -16,7 +16,7 @@ export const ContactPage: React.FC = () => {
           Get in <span className="gradient-text">Touch</span>
         </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: '1.25rem', maxWidth: '600px', margin: '0 auto' }}>
-          Have questions about our AI agents, enterprise hosting, or pricing structures? Send us a message and we'll reply shortly.
+          Have questions about our collaborative builders, enterprise hosting, or pricing structures? Send us a message and we'll reply shortly.
         </p>
       </header>
 

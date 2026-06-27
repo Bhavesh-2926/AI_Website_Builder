@@ -824,6 +824,13 @@ export const MasterTemplateRenderer: React.FC<TemplateProps & { setActivePage: (
     }
   }
 
+  const showBackgroundGlows = 
+    design?.styles?.card === 'glassmorphic-glow' || 
+    design?.styles?.navbar === 'floating-glass' ||
+    design?.background === '#0a0e1a' ||
+    design?.background === '#0b0f19' ||
+    design?.background === '#030712'
+
   return (
     <div className="template-viewport-wrapper" style={{
       ...cssVariables,
@@ -834,19 +841,29 @@ export const MasterTemplateRenderer: React.FC<TemplateProps & { setActivePage: (
       position: 'relative',
       paddingBottom: '2rem'
     }}>
-      <TemplateNavbar 
-        businessName={businessName} 
-        pages={pagesList} 
-        activePage={activePage} 
-        setActivePage={setActivePage}
-        design={design}
-      />
-      
-      <main style={{ minHeight: '60vh' }}>
-        {renderPage()}
-      </main>
+      {/* Background radial glows for glassmorphism / dark templates */}
+      {showBackgroundGlows && (
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+          <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '50%', height: '50%', borderRadius: '50%', background: 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }}></div>
+          <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '50%', height: '50%', borderRadius: '50%', background: 'radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%)', filter: 'blur(80px)' }}></div>
+        </div>
+      )}
 
-      <TemplateFooter businessName={businessName} />
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <TemplateNavbar 
+          businessName={businessName} 
+          pages={pagesList} 
+          activePage={activePage} 
+          setActivePage={setActivePage}
+          design={design}
+        />
+        
+        <main style={{ minHeight: '60vh', position: 'relative', zIndex: 1 }}>
+          {renderPage()}
+        </main>
+
+        <TemplateFooter businessName={businessName} />
+      </div>
     </div>
   )
 }

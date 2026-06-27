@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useStore, ActiveWebsitePayload } from '../store/useStore'
 import api from '../services/api'
 import { TemplateRenderer } from '../templates/TemplateRenderer'
+import { downloadSite } from '../utils/downloadSite'
 import {
   Save,
   Globe,
@@ -18,7 +19,8 @@ import {
   AlignLeft,
   X,
   FileText,
-  AlertCircle
+  AlertCircle,
+  Download
 } from 'lucide-react'
 
 export const WebsiteEditor: React.FC = () => {
@@ -267,6 +269,9 @@ export const WebsiteEditor: React.FC = () => {
           </button>
           <button onClick={handleSave} className="btn btn-secondary" style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }} disabled={saving}>
             <Save className="w-4 h-4" /> {saving ? "Saving..." : "Save Draft"}
+          </button>
+          <button onClick={() => downloadSite(activeWebsite)} className="btn btn-secondary" style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}>
+            <Download className="w-4 h-4" /> Download Code
           </button>
           <button onClick={() => setShowPublishModal(true)} className="btn btn-primary" style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}>
             <Globe className="w-4 h-4" /> Go Live

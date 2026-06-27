@@ -26,8 +26,8 @@ export const PricingPage: React.FC = () => {
       description: "For active business owners looking to deploy production-ready customized websites.",
       features: [
         "Unlimited generated websites",
-        "Advanced AI Copywriting (OpenAI powered)",
-        "AI Image Generation (DALL-E 3)",
+        "Advanced Copywriting (GPT powered)",
+        "Automated Image Generation (DALL-E 3)",
         "SEO Meta Tags automation",
         "Custom domain support",
         "Premium Glassmorphism themes",
@@ -61,7 +61,7 @@ export const PricingPage: React.FC = () => {
           Flexible Plans for Every <span className="gradient-text">Creator</span>
         </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: '1.25rem', maxWidth: '650px', margin: '0 auto' }}>
-          Choose the plan that fits your growth. Scale up your websites, hosting, and AI generation credits as your business expands.
+          Choose the plan that fits your growth. Scale up your websites, hosting, and creation credits as your business expands.
         </p>
       </header>
 

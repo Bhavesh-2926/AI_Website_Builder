@@ -87,7 +87,7 @@ export const PublicLayout: React.FC = () => {
           <Link to="/about" style={{ textDecoration: 'none', color: 'var(--text-muted)' }}>About Us</Link>
           <Link to="/contact" style={{ textDecoration: 'none', color: 'var(--text-muted)' }}>Contact</Link>
         </div>
-        <p>&copy; {new Date().getFullYear()} Antigravity Builder SaaS. Created for professional AI web generation.</p>
+        <p>&copy; {new Date().getFullYear()} Antigravity Builder SaaS. Created for professional web generation.</p>
       </footer>
     </div>
   )
