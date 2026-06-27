@@ -44,6 +44,9 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
       --text-muted: ${textMuted};
       --border-radius: ${borderRadius};
       --font-family: '${fontName}', system-ui, -apple-system, sans-serif;
+      --glass-blur: ${design?.styles?.blur_strength || '16px'};
+      --glow-border: ${design?.styles?.glow_intensity === 'high' ? `1px solid ${primary}` : '1px solid rgba(255,255,255,0.06)'};
+      --hover-transform: ${design?.styles?.hover_animation === 'scale-up' ? 'scale(1.04)' : 'translateY(-4px)'};
     }
 
     * {
@@ -186,10 +189,10 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
     .glass-panel {
       padding: 2.5rem 2rem;
       border-radius: var(--border-radius);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: var(--glow-border);
       background: var(--surface-color);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -198,7 +201,7 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
 
     .glass-panel:hover {
       border-color: rgba(99, 102, 241, 0.2);
-      transform: translateY(-4px);
+      transform: var(--hover-transform);
     }
 
     /* Buttons */
@@ -319,6 +322,16 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
     }
   `
 
+  // Helper to map card configuration styles to HTML classes
+  const getCardStyleClass = (cardType: string | undefined): string => {
+    if (cardType === 'minimal-border') return 'card-minimal-border'
+    if (cardType === 'luxury-gold') return 'card-luxury-gold'
+    if (cardType === 'corporate-solid') return 'card-corporate-solid'
+    return 'glass-panel'
+  }
+
+  const cardClass = getCardStyleClass(design?.styles?.card)
+
   // Helper page render functions mapped to Vanilla HTML strings
   const renderPageHTML = (pageName: string, pageData: any): string => {
     switch (pageName) {
@@ -327,9 +340,44 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
         const features = pageData.features || []
         const intro = pageData.intro || ''
 
-        return `
-          <div style="padding: 2rem;">
-            <!-- Hero Section -->
+        const renderHeroHTML = () => {
+          if (design?.styles?.hero === 'split-screen') {
+            return `
+            <section style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; padding: 4rem 1rem; align-items: center; margin-bottom: 4rem;" class="contact-grid">
+              <div style="text-align: left;">
+                <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 1.5rem; line-height: 1.2;">
+                  ${escapeHtml(hero.title)}
+                </h1>
+                <p style="font-size: 1.15rem; color: var(--text-muted); margin-bottom: 2.5rem;">
+                  ${escapeHtml(hero.subtitle)}
+                </p>
+                <button class="cta-button" onclick="navigateTo('Contact')">
+                  ${escapeHtml(hero.cta_text)}
+                </button>
+              </div>
+              <div style="border-radius: var(--border-radius, 16px); overflow: hidden; border: var(--glow-border); box-shadow: 0 8px 32px rgba(0,0,0,0.37);">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=60" alt="Mockup" style="width: 100%; height: auto; display: block;" />
+              </div>
+            </section>`
+          }
+
+          if (design?.styles?.hero === 'minimal-left') {
+            return `
+            <section style="text-align: left; padding: 4rem 0; border-bottom: 1px solid var(--text-color); margin-bottom: 4rem;">
+              <h1 style="font-size: 4rem; font-weight: 300; letter-spacing: -1px; margin-bottom: 1.5rem;">
+                ${escapeHtml(hero.title)}
+              </h1>
+              <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin-bottom: 2.5rem;">
+                ${escapeHtml(hero.subtitle)}
+              </p>
+              <button onclick="navigateTo('Contact')" style="background: none; border: none; color: var(--text-color); text-decoration: underline; font-weight: 700; font-size: 1.1rem; cursor: pointer; padding: 0;">
+                ${escapeHtml(hero.cta_text)} &rarr;
+              </button>
+            </section>`
+          }
+
+          // default centered
+          return `
             <section style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 6rem 1rem; background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 80%); border-radius: 24px; margin-bottom: 4rem;">
               <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; line-height: 1.2;">
                 ${escapeHtml(hero.title)}
@@ -340,7 +388,13 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
               <button class="cta-button" onclick="navigateTo('Contact')">
                 ${escapeHtml(hero.cta_text)}
               </button>
-            </section>
+            </section>`
+        }
+
+        return `
+          <div style="padding: 2rem;">
+            <!-- Hero Section -->
+            ${renderHeroHTML()}
 
             <!-- Intro Section -->
             ${intro ? `
@@ -358,7 +412,7 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
               <h2 style="font-size: 2.25rem; text-align: center; margin-bottom: 3rem;">Why Choose Us</h2>
               <div class="grid-cols-3">
                 ${features.map((feat: any) => `
-                  <div class="glass-panel" style="text-align: center; align-items: center;">
+                  <div class="${cardClass}" style="text-align: ${design?.styles?.card === 'minimal-border' ? 'left' : 'center'}; align-items: ${design?.styles?.card === 'minimal-border' ? 'flex-start' : 'center'}; display: flex; flex-direction: column; gap: 1rem;">
                     <div style="padding: 1rem; border-radius: 50%; background: rgba(99, 102, 241, 0.1); color: var(--primary-color); display: inline-flex;">
                       <i data-lucide="${escapeHtml(feat.icon || 'sparkles')}"></i>
                     </div>
@@ -399,7 +453,7 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
                 <h2 style="font-size: 2.25rem; text-align: center; margin-bottom: 3rem;">Our Core Values</h2>
                 <div class="grid-cols-3">
                   ${values.map((val: any) => `
-                    <div class="glass-panel">
+                    <div class="${cardClass}" style="text-align: ${design?.styles?.card === 'minimal-border' ? 'left' : 'center'};">
                       <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: var(--primary-color);">
                         ${escapeHtml(val.title)}
                       </h3>
@@ -430,13 +484,13 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
 
             <div class="grid-cols-3">
               ${items.map((item: any) => `
-                <div class="glass-panel" style="padding: 0; overflow: hidden;">
+                <div class="${cardClass}" style="padding: 0; overflow: hidden;">
                   ${item.image_url ? `
                     <div style="height: 220px; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.05);">
                       <img src="${escapeHtml(item.image_url)}" alt="${escapeHtml(item.name)}" style="width: 100%; height: 100%; object-fit: cover;" />
                     </div>
                   ` : ''}
-                  <div style="padding: 1.5rem;">
+                  <div style="padding: 1.5rem; text-align: ${design?.styles?.card === 'minimal-border' ? 'left' : 'inherit'};">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                       <h3 style="font-size: 1.25rem; font-weight: 700;">${escapeHtml(item.name)}</h3>
                       ${item.price ? `
@@ -469,8 +523,8 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
 
             <div class="grid-cols-3">
               ${reviews.map((rev: any) => `
-                <div class="glass-panel">
-                  <div style="display: flex; gap: 0.2rem; margin-bottom: 1rem; color: var(--accent-color);">
+                <div class="${cardClass}" style="padding: 2rem; text-align: ${design?.styles?.card === 'minimal-border' ? 'left' : 'center'};">
+                  <div style="display: flex; gap: 0.2rem; margin-bottom: 1rem; color: var(--accent-color); justify-content: ${design?.styles?.card === 'minimal-border' ? 'flex-start' : 'center'};">
                     ${Array.from({ length: rev.rating || 5 }).map(() => `
                       <i data-lucide="star" style="fill: currentColor; width: 20px; height: 20px;"></i>
                     `).join('')}
@@ -502,7 +556,7 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
 
             <div class="grid-cols-3">
               ${posts.map((post: any) => `
-                <div class="glass-panel" style="justify-content: space-between;">
+                <div class="${cardClass}" style="justify-content: space-between; display: flex; flex-direction: column; text-align: ${design?.styles?.card === 'minimal-border' ? 'left' : 'center'};">
                   <div>
                     <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">
                       <span>${escapeHtml(post.date)}</span>
@@ -515,7 +569,7 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
                       ${escapeHtml(post.excerpt)}
                     </p>
                   </div>
-                  <div style="display: flex; align-items: center; gap: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem; justify-content: ${design?.styles?.card === 'minimal-border' ? 'flex-start' : 'center'};">
                     <i data-lucide="user" style="width: 16px; height: 16px; color: var(--primary-color);"></i>
                     <span style="font-size: 0.85rem; font-weight: 600;">By ${escapeHtml(post.author)}</span>
                   </div>
@@ -540,7 +594,7 @@ export const downloadSite = (payload: ActiveWebsitePayload) => {
 
             <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem;" class="contact-grid">
               <!-- Contact Form -->
-              <div class="glass-panel">
+              <div class="${cardClass}" style="padding: 2.5rem;">
                 <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Send Us a Message</h2>
                 <form id="contactForm" onsubmit="handleContactSubmit(event)" style="display: flex; flex-direction: column; gap: 1.25rem;">
                   <div class="form-group">

@@ -118,17 +118,61 @@ body {
 /* Glassmorphism Containers */
 .glass-panel {
   background: var(--bg-dark-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-light);
-  border-radius: 16px;
+  backdrop-filter: blur(var(--glass-blur, 16px));
+  -webkit-backdrop-filter: blur(var(--glass-blur, 16px));
+  border: var(--glow-border, 1px solid var(--border-light));
+  border-radius: var(--border-radius, 16px);
   box-shadow: var(--shadow-glass);
-  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+  transition: all var(--transition-normal);
 }
 
-.glass-panel-hover:hover {
-  border-color: var(--border-glow);
-  box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.15);
+.glass-panel:hover {
+  transform: var(--hover-transform, translateY(-4px));
+}
+
+/* Card Variations */
+.card-minimal-border {
+  border: 1px solid var(--text-color, #fff);
+  background: transparent;
+  border-radius: 0 !important;
+  padding: 2rem;
+  transition: all var(--transition-fast);
+}
+.card-minimal-border:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.card-luxury-gold {
+  background: linear-gradient(135deg, #111 0%, #1c1610 100%);
+  border: 1px solid #d4af37;
+  border-radius: var(--border-radius, 16px);
+  padding: 2.5rem 2rem;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.1);
+  transition: all var(--transition-normal);
+}
+.card-luxury-gold:hover {
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.25);
+  transform: var(--hover-transform, translateY(-4px));
+}
+
+.card-corporate-solid {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all var(--transition-normal);
+  color: #f8fafc;
+}
+[data-theme="light"] .card-corporate-solid {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  color: #0f172a;
+}
+.card-corporate-solid:hover {
+  transform: var(--hover-transform, translateY(-4px));
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Layout Utilities */

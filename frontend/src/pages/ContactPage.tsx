@@ -87,7 +87,7 @@ export const ContactPage: React.FC = () => {
             </div>
             <div>
               <h4 style={{ fontWeight: 700, fontSize: '1.1rem' }}>Email Support</h4>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>support@antigravity.ai</p>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>support@swiftsite.com</p>
             </div>
           </div>
 

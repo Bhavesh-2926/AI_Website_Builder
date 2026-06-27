@@ -49,7 +49,7 @@ export const DashboardLayout: React.FC = () => {
       {/* Brand Header */}
       <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '1.25rem', color: 'var(--text-primary)', marginBottom: '2.5rem' }}>
         <Sparkles className="text-primary w-6 h-6" style={{ color: 'var(--primary)' }} />
-        <span>Antigravity <span className="gradient-text">SaaS</span></span>
+        <span>Swift<span className="gradient-text">Site</span></span>
       </Link>
 
       {/* Navigation List */}

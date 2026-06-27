@@ -27,11 +27,14 @@ export interface WebsiteDesign {
   text_color: string
   border_radius: string
   styles: {
-    navbar: string
-    hero: string
-    card: string
-    footer: string
-    animation: string
+    navbar?: string
+    hero?: string
+    card?: string
+    footer?: string
+    animation?: string
+    blur_strength?: string
+    glow_intensity?: string
+    hover_animation?: string
   }
 }
 

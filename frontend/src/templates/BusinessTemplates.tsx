@@ -19,6 +19,14 @@ const DynamicIcon = ({ name, className = 'w-6 h-6' }: { name: string; className?
   return <IconComponent className={className} />
 }
 
+export const getCardStyleClass = (design: any) => {
+  const cardStyle = design?.styles?.card
+  if (cardStyle === 'minimal-border') return 'card-minimal-border'
+  if (cardStyle === 'luxury-gold') return 'card-luxury-gold'
+  if (cardStyle === 'corporate-solid') return 'card-corporate-solid'
+  return 'glass-panel'
+}
+
 // ----------------------------------------------------
 // SHARED TEMPLATE COMPONENTS
 // ----------------------------------------------------
@@ -94,13 +102,70 @@ export const TemplateFooter = ({ businessName }: { businessName: string }) => {
 // ----------------------------------------------------
 // 1. HOME PAGE COMPONENT
 // ----------------------------------------------------
-export const HomePage: React.FC<any> = ({ data, onEdit, isEditable }) => {
+export const HomePage: React.FC<any> = ({ data, onEdit, isEditable, design }) => {
   const hero = data.hero || { title: 'Welcome', subtitle: 'Subtitle text here', cta_text: 'Get Started' }
   const features = data.features || []
+  const cardClass = getCardStyleClass(design)
 
-  return (
-    <div style={{ padding: '2rem' }}>
-      {/* Hero Section */}
+  const renderHero = () => {
+    if (design?.styles?.hero === 'split-screen') {
+      return (
+        <section style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', padding: '4rem 1rem', alignItems: 'center', marginBottom: '4rem' }} className="hero-split-grid">
+          <div style={{ textAlign: 'left' }}>
+            <h1 
+              onClick={() => isEditable && onEdit?.('hero.title', hero.title)}
+              style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1.5rem', lineHeight: 1.2, cursor: isEditable ? 'pointer' : 'default', border: isEditable ? '1px dashed rgba(255,255,255,0.2)' : 'none', padding: '4px' }}
+            >
+              {hero.title}
+            </h1>
+            <p 
+              onClick={() => isEditable && onEdit?.('hero.subtitle', hero.subtitle)}
+              style={{ fontSize: '1.15rem', color: 'var(--text-muted)', marginBottom: '2.5rem', cursor: isEditable ? 'pointer' : 'default', border: isEditable ? '1px dashed rgba(255,255,255,0.2)' : 'none', padding: '4px' }}
+            >
+              {hero.subtitle}
+            </p>
+            <button 
+              onClick={() => isEditable && onEdit?.('hero.cta_text', hero.cta_text)}
+              className="cta-button"
+              style={{ borderStyle: isEditable ? 'dashed' : 'none', borderColor: 'rgba(255,255,255,0.4)', borderWidth: isEditable ? '1px' : '0px' }}
+            >
+              {hero.cta_text}
+            </button>
+          </div>
+          <div style={{ borderRadius: 'var(--border-radius, 16px)', overflow: 'hidden', border: 'var(--glow-border)', boxShadow: 'var(--shadow-glass)' }}>
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=60" alt="Visual representation mockup" style={{ width: '100%', height: 'auto', display: 'block' }} />
+          </div>
+        </section>
+      )
+    }
+
+    if (design?.styles?.hero === 'minimal-left') {
+      return (
+        <section style={{ textAlign: 'left', padding: '4rem 0', borderBottom: '1px solid var(--text-color)', marginBottom: '4rem' }}>
+          <h1 
+            onClick={() => isEditable && onEdit?.('hero.title', hero.title)}
+            style={{ fontSize: '4rem', fontWeight: 300, letterSpacing: '-1px', marginBottom: '1.5rem', cursor: isEditable ? 'pointer' : 'default', border: isEditable ? '1px dashed rgba(255,255,255,0.2)' : 'none', padding: '4px' }}
+          >
+            {hero.title}
+          </h1>
+          <p 
+            onClick={() => isEditable && onEdit?.('hero.subtitle', hero.subtitle)}
+            style={{ fontSize: '1.25rem', color: 'var(--text-muted)', maxWidth: '600px', marginBottom: '2.5rem', cursor: isEditable ? 'pointer' : 'default', border: isEditable ? '1px dashed rgba(255,255,255,0.2)' : 'none', padding: '4px' }}
+          >
+            {hero.subtitle}
+          </p>
+          <button 
+            onClick={() => isEditable && onEdit?.('hero.cta_text', hero.cta_text)}
+            style={{ background: 'none', border: 'none', borderStyle: isEditable ? 'dashed' : 'none', borderColor: 'rgba(255,255,255,0.4)', borderWidth: isEditable ? '1px' : '0px', color: 'var(--text-color)', textDecoration: 'underline', fontWeight: 700, fontSize: '1.1rem', cursor: 'pointer', padding: 0 }}
+          >
+            {hero.cta_text} &rarr;
+          </button>
+        </section>
+      )
+    }
+
+    // Default: centered-gradient
+    return (
       <section style={{
         display: 'flex',
         flexDirection: 'column',
@@ -171,6 +236,13 @@ export const HomePage: React.FC<any> = ({ data, onEdit, isEditable }) => {
           {hero.cta_text}
         </motion.button>
       </section>
+    )
+  }
+
+  return (
+    <div style={{ padding: '2rem' }}>
+      {/* Dynamic Hero layout */}
+      {renderHero()}
 
       {/* Intro Context */}
       {data.intro && (
@@ -201,16 +273,13 @@ export const HomePage: React.FC<any> = ({ data, onEdit, isEditable }) => {
             {features.map((feat: any, idx: number) => (
               <div 
                 key={idx}
-                className="glass-panel" 
+                className={cardClass} 
                 style={{
                   padding: '2.5rem 2rem',
-                  borderRadius: 'var(--border-radius)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  textAlign: 'center',
-                  background: 'var(--surface-color)',
+                  textAlign: design?.styles?.card === 'minimal-border' ? 'left' : 'center',
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'center',
+                  alignItems: design?.styles?.card === 'minimal-border' ? 'flex-start' : 'center',
                   gap: '1rem'
                 }}
               >
@@ -260,9 +329,10 @@ export const HomePage: React.FC<any> = ({ data, onEdit, isEditable }) => {
 // ----------------------------------------------------
 // 2. ABOUT PAGE COMPONENT
 // ----------------------------------------------------
-export const AboutPage: React.FC<any> = ({ data, onEdit, isEditable }) => {
+export const AboutPage: React.FC<any> = ({ data, onEdit, isEditable, design }) => {
   const story = data.story || { headline: 'Our Story', full_text: 'Founded in 2026...' }
   const values = data.values || []
+  const cardClass = getCardStyleClass(design)
 
   return (
     <div style={{ padding: '3rem 2rem', maxWidth: '1000px', margin: '0 auto' }}>
@@ -308,12 +378,9 @@ export const AboutPage: React.FC<any> = ({ data, onEdit, isEditable }) => {
             {values.map((val: any, idx: number) => (
               <div 
                 key={idx}
-                className="glass-panel"
+                className={cardClass}
                 style={{
-                  padding: '2rem',
-                  borderRadius: 'var(--border-radius)',
-                  background: 'var(--surface-color)',
-                  border: '1px solid rgba(255,255,255,0.06)'
+                  textAlign: design?.styles?.card === 'minimal-border' ? 'left' : 'center',
                 }}
               >
                 <h3 
@@ -353,10 +420,11 @@ export const AboutPage: React.FC<any> = ({ data, onEdit, isEditable }) => {
 // ----------------------------------------------------
 // 3. SERVICES / MENU / GALLERY PAGE COMPONENT
 // ----------------------------------------------------
-export const ServicesPage: React.FC<any> = ({ data, onEdit, isEditable }) => {
+export const ServicesPage: React.FC<any> = ({ data, onEdit, isEditable, design }) => {
   const items = data.items || []
   const title = data.title || 'Our Offerings'
   const subtitle = data.subtitle || 'What we bring to you'
+  const cardClass = getCardStyleClass(design)
 
   return (
     <div style={{ padding: '3rem 2rem' }}>
@@ -389,12 +457,10 @@ export const ServicesPage: React.FC<any> = ({ data, onEdit, isEditable }) => {
         {items.map((item: any, idx: number) => (
           <div 
             key={idx}
-            className="glass-panel" 
+            className={cardClass} 
             style={{
-              borderRadius: 'var(--border-radius)',
               overflow: 'hidden',
-              background: 'var(--surface-color)',
-              border: '1px solid rgba(255,255,255,0.06)'
+              padding: 0
             }}
           >
             {item.image_url && (
@@ -453,10 +519,11 @@ export const ServicesPage: React.FC<any> = ({ data, onEdit, isEditable }) => {
 // ----------------------------------------------------
 // 4. TESTIMONIALS PAGE COMPONENT
 // ----------------------------------------------------
-export const TestimonialsPage: React.FC<any> = ({ data, onEdit, isEditable }) => {
+export const TestimonialsPage: React.FC<any> = ({ data, onEdit, isEditable, design }) => {
   const reviews = data.reviews || []
   const title = data.title || 'Client Reviews'
   const subtitle = data.subtitle || 'What our customers say'
+  const cardClass = getCardStyleClass(design)
 
   return (
     <div style={{ padding: '3rem 2rem' }}>
@@ -489,12 +556,10 @@ export const TestimonialsPage: React.FC<any> = ({ data, onEdit, isEditable }) =>
         {reviews.map((rev: any, idx: number) => (
           <div 
             key={idx}
-            className="glass-panel" 
+            className={cardClass} 
             style={{
               padding: '2rem',
-              borderRadius: 'var(--border-radius)',
-              background: 'var(--surface-color)',
-              border: '1px solid rgba(255,255,255,0.06)'
+              textAlign: design?.styles?.card === 'minimal-border' ? 'left' : 'center'
             }}
           >
             {/* Stars */}
@@ -552,10 +617,11 @@ export const TestimonialsPage: React.FC<any> = ({ data, onEdit, isEditable }) =>
 // ----------------------------------------------------
 // 5. BLOG PAGE COMPONENT
 // ----------------------------------------------------
-export const BlogPage: React.FC<any> = ({ data, onEdit, isEditable }) => {
+export const BlogPage: React.FC<any> = ({ data, onEdit, isEditable, design }) => {
   const posts = data.posts || []
   const title = data.title || 'Latest Updates'
   const subtitle = data.subtitle || 'Read our blog'
+  const cardClass = getCardStyleClass(design)
 
   return (
     <div style={{ padding: '3rem 2rem' }}>
@@ -588,15 +654,13 @@ export const BlogPage: React.FC<any> = ({ data, onEdit, isEditable }) => {
         {posts.map((post: any, idx: number) => (
           <article 
             key={idx}
-            className="glass-panel" 
+            className={cardClass} 
             style={{
               padding: '2rem',
-              borderRadius: 'var(--border-radius)',
-              background: 'var(--surface-color)',
-              border: '1px solid rgba(255,255,255,0.06)',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              textAlign: design?.styles?.card === 'minimal-border' ? 'left' : 'center'
             }}
           >
             <div>
@@ -655,12 +719,13 @@ export const BlogPage: React.FC<any> = ({ data, onEdit, isEditable }) => {
 // ----------------------------------------------------
 // 6. CONTACT PAGE COMPONENT
 // ----------------------------------------------------
-export const ContactPage: React.FC<any> = ({ data, onEdit, isEditable }) => {
+export const ContactPage: React.FC<any> = ({ data, onEdit, isEditable, design }) => {
   const headline = data.headline || 'Contact Us'
   const email = data.email || 'hello@business.com'
   const phone = data.phone || '(555) 123-4567'
   const address = data.address || '123 Business St'
   const hours = data.hours || []
+  const cardClass = getCardStyleClass(design)
   
   return (
     <div style={{ padding: '3rem 2rem', maxWidth: '1100px', margin: '0 auto' }}>
@@ -678,9 +743,9 @@ export const ContactPage: React.FC<any> = ({ data, onEdit, isEditable }) => {
         </h1>
       </header>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4rem' }} className="contact-grid">
         {/* Left Side: Contact Form */}
-        <div className="glass-panel" style={{ padding: '2.5rem', borderRadius: 'var(--border-radius)', background: 'var(--surface-color)' }}>
+        <div className={cardClass} style={{ padding: '2.5rem' }}>
           <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Send Us a Message</h2>
           <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div className="form-group">
@@ -793,6 +858,9 @@ export const MasterTemplateRenderer: React.FC<TemplateProps & { setActivePage: (
     '--border-radius': design?.border_radius || '16px',
     '--text-muted': design?.text_color ? `${design.text_color}cc` : '#94a3b8',
     'fontFamily': design?.font || 'Outfit',
+    '--glass-blur': design?.styles?.blur_strength || '16px',
+    '--glow-border': design?.styles?.glow_intensity === 'high' ? `1px solid ${design?.primary || '#6366f1'}` : '1px solid rgba(255,255,255,0.06)',
+    '--hover-transform': design?.styles?.hover_animation === 'scale-up' ? 'scale(1.04)' : 'translateY(-4px)',
   } as React.CSSProperties
 
   const pageData = content[activePage] || {}
@@ -801,19 +869,19 @@ export const MasterTemplateRenderer: React.FC<TemplateProps & { setActivePage: (
   const renderPage = () => {
     switch (activePage) {
       case 'Home':
-        return <HomePage data={pageData} onEdit={onEditElement} isEditable={isEditable} />
+        return <HomePage data={pageData} onEdit={onEditElement} isEditable={isEditable} design={design} />
       case 'About':
-        return <AboutPage data={pageData} onEdit={onEditElement} isEditable={isEditable} />
+        return <AboutPage data={pageData} onEdit={onEditElement} isEditable={isEditable} design={design} />
       case 'Services':
       case 'Menu':
       case 'Gallery':
-        return <ServicesPage data={pageData} onEdit={onEditElement} isEditable={isEditable} />
+        return <ServicesPage data={pageData} onEdit={onEditElement} isEditable={isEditable} design={design} />
       case 'Testimonials':
-        return <TestimonialsPage data={pageData} onEdit={onEditElement} isEditable={isEditable} />
+        return <TestimonialsPage data={pageData} onEdit={onEditElement} isEditable={isEditable} design={design} />
       case 'Blog':
-        return <BlogPage data={pageData} onEdit={onEditElement} isEditable={isEditable} />
+        return <BlogPage data={pageData} onEdit={onEditElement} isEditable={isEditable} design={design} />
       case 'Contact':
-        return <ContactPage data={pageData} onEdit={onEditElement} isEditable={isEditable} />
+        return <ContactPage data={pageData} onEdit={onEditElement} isEditable={isEditable} design={design} />
       default:
         return (
           <div style={{ padding: '4rem', textAlign: 'center' }}>

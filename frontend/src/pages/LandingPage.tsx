@@ -105,7 +105,7 @@ export const LandingPage: React.FC = () => {
             <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#ef4444' }}></div>
             <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#f59e0b' }}></div>
             <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#10b981' }}></div>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginLeft: '1rem' }}>https://builder.antigravity.ai/editor</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginLeft: '1rem' }}>https://builder.swiftsite.com/editor</span>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '1.5rem', height: '400px', background: 'rgba(10, 14, 26, 0.4)', borderRadius: '12px', overflow: 'hidden' }}>

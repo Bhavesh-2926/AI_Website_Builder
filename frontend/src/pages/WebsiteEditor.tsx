@@ -457,6 +457,46 @@ export const WebsiteEditor: React.FC = () => {
                       <option value="30px">30px (Dynamic bubble)</option>
                     </select>
                   </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Glass Blur Strength</label>
+                    <select
+                      className="input-field"
+                      value={design?.styles?.blur_strength || '16px'}
+                      onChange={(e) => updateActiveWebsiteDesign({ styles: { blur_strength: e.target.value } })}
+                      style={{ background: '#0a0d17', cursor: 'pointer' }}
+                    >
+                      <option value="4px">4px (Low glass blur)</option>
+                      <option value="16px">16px (Medium standard)</option>
+                      <option value="32px">32px (Deep frost reflection)</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Card Border & Glow Effect</label>
+                    <select
+                      className="input-field"
+                      value={design?.styles?.glow_intensity || 'low'}
+                      onChange={(e) => updateActiveWebsiteDesign({ styles: { glow_intensity: e.target.value } })}
+                      style={{ background: '#0a0d17', cursor: 'pointer' }}
+                    >
+                      <option value="low">Soft Translucent (Default)</option>
+                      <option value="high">Accent Glowing Border</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Hover Animation Effect</label>
+                    <select
+                      className="input-field"
+                      value={design?.styles?.hover_animation || 'translate-up'}
+                      onChange={(e) => updateActiveWebsiteDesign({ styles: { hover_animation: e.target.value } })}
+                      style={{ background: '#0a0d17', cursor: 'pointer' }}
+                    >
+                      <option value="translate-up">Float Slide (Classic)</option>
+                      <option value="scale-up">Pop Zoom (Geometric scale)</option>
+                    </select>
+                  </div>
                 </div>
               )}
 

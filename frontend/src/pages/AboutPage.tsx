@@ -17,7 +17,7 @@ export const AboutPage: React.FC = () => {
       <section className="glass-panel" style={{ padding: '3rem 2.5rem', marginBottom: '4rem' }}>
         <h2 style={{ fontSize: '1.75rem', marginBottom: '1.25rem', color: 'var(--primary)' }}>Autonomous Website Creation</h2>
         <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: '1.5rem', fontSize: '1.05rem' }}>
-          At Antigravity SaaS, we believe in the power of multi-agent orchestration. Instead of a single model guessing what you need, we use three distinct agents working collaboratively: a Business Requirement Agent, a UI/UX Design System Agent, and a Conversion Copywriting Agent.
+          At SwiftSite, we believe in the power of multi-agent orchestration. Instead of a single model guessing what you need, we use three distinct agents working collaboratively: a Business Requirement Agent, a UI/UX Design System Agent, and a Conversion Copywriting Agent.
         </p>
         <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: '1.05rem' }}>
           By dividing requirements analysis, branding assets curation, and marketing copy generation, our agents build customized websites in seconds. You get clean layouts, high-ranking SEO properties, and automated image generation from one interface.

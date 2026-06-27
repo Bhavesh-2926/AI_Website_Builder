@@ -30,7 +30,7 @@ export const PublicLayout: React.FC = () => {
       }}>
         <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '1.25rem', color: 'var(--text-primary)' }}>
           <Sparkles className="text-primary w-6 h-6" style={{ color: 'var(--primary)' }} />
-          <span>Antigravity <span className="gradient-text">Builder</span></span>
+          <span>Swift<span className="gradient-text">Site</span></span>
         </Link>
 
         {/* Desktop nav links */}
@@ -87,7 +87,7 @@ export const PublicLayout: React.FC = () => {
           <Link to="/about" style={{ textDecoration: 'none', color: 'var(--text-muted)' }}>About Us</Link>
           <Link to="/contact" style={{ textDecoration: 'none', color: 'var(--text-muted)' }}>Contact</Link>
         </div>
-        <p>&copy; {new Date().getFullYear()} Antigravity Builder SaaS. Created for professional web generation.</p>
+        <p>&copy; {new Date().getFullYear()} SwiftSite. Created for professional web generation.</p>
       </footer>
     </div>
   )

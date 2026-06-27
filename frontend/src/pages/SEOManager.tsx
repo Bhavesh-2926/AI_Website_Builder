@@ -243,7 +243,7 @@ export const SEOManager: React.FC = () => {
                 textAlign: 'left'
               }}>
                 <span style={{ color: '#202124', fontSize: '14px', display: 'block', marginBottom: '2px', wordBreak: 'break-all' }}>
-                  https://builder.antigravity.ai/site/{websites.find(w => w.id === selectedWebsiteId)?.published_url || "my-slug"}
+                  https://builder.swiftsite.com/site/{websites.find(w => w.id === selectedWebsiteId)?.published_url || "my-slug"}
                 </span>
                 <h3 style={{ fontSize: '20px', fontWeight: 400, color: '#1a0dab', lineHeight: 1.3, marginBottom: '4px', textDecoration: 'none', wordBreak: 'break-word', fontFamily: 'arial' }}>
                   {title || "Search Result Title Preview"}
