@@ -145,3 +145,4 @@ Open **`http://localhost:3000`** in Google Chrome.
 2. Set the root directory to `frontend`.
 3. Set the build script to `npm run build` and the output directory to `dist`.
 4. Configure environment keys `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+5.
